@@ -1,7 +1,5 @@
 ﻿  main.c
 d:\자료구조_1330\minesweeper\지뢰찾기\etc.h(31): warning C4244: '함수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-d:\자료구조_1330\minesweeper\지뢰찾기\game.h(22): warning C4020: 'play': 실제 매개 변수가 너무 많습니다.
-d:\자료구조_1330\minesweeper\지뢰찾기\game.h(27): warning C4029: 선언된 정식 매개 변수 목록이 정의와 다릅니다.
 d:\자료구조_1330\minesweeper\지뢰찾기\menu.h(38): warning C4047: '함수': 'int *'의 간접 참조 수준이 'int [9][9]'과(와) 다릅니다.
 d:\자료구조_1330\minesweeper\지뢰찾기\menu.h(38): warning C4024: 'game': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
 d:\자료구조_1330\minesweeper\지뢰찾기\menu.h(42): warning C4047: '함수': 'int *'의 간접 참조 수준이 'int [16][16]'과(와) 다릅니다.

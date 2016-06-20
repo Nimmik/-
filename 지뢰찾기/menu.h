@@ -34,15 +34,15 @@ int menu() {
 			//게임 난이도 선택
 			switch (select) {
 			case 1:
-				getchar();
+				Sleep(50);
 				game(easy, 1);
 				break;
 			case 2:
-				getchar();
+				Sleep(50);
 				game(normal, 2);
 				break;
 			case 3:
-				getchar();
+				Sleep(50);
 				game(hard, 3);
 				break;
 			case 4:

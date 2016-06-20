@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include "etc.h"
 
-void play(int* arr, int y, int x);
+void play(int* arr, int y, int x, int num);
 void drawMap(int* arr, int y, int x);
 int getSurround(int* arr, int y, int x, int nowY, int nowX);
 void getBlank(int* arr, int* map, int y, int x, int nowY, int nowX);
@@ -67,6 +67,8 @@ void play(int* arr, int y, int x, int num) {
 					getBlank(arr, map, y, x, cursorY, cursorX);
 				}
 				else {
+					printf("¡Ø");
+					gotoxy(y + 1, 0);
 					printf("Áö·Ú ¹ß°ß");
 					break;
 				}
@@ -78,7 +80,6 @@ void play(int* arr, int y, int x, int num) {
 				break;
 			}
 		}
-		Sleep(50);
 	}
 	free(map);
 }
