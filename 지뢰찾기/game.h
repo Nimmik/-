@@ -7,10 +7,7 @@ void play(int* arr, int y, int x);
 void drawMap(int* arr, int y, int x);
 int getSurround(int* arr, int y, int x, int nowY, int nowX);
 void getBlank(int* arr, int* map, int y, int x, int nowY, int nowX);
-//void getBlankRightUp(int* arr, int* map, int y, int x, int nowY, int nowX);
-//void getBlankRightDown(int* arr, int* map, int y, int x, int nowY, int nowX);
-//void getBlankLeftUp(int* arr, int* map, int y, int x, int nowY, int nowX);
-//void getBlankLeftDown(int* arr, int* map, int y, int x, int nowY, int nowX);
+int checkEnd(int* arr, int* map, int y, int x, int num);
 
 void game(int* arr, int level) {
 	int x = 9, y = 9, num = 10;
@@ -22,12 +19,12 @@ void game(int* arr, int level) {
 	}
 	InitMap(arr, y, x, num);
 	Sleep(34);
-	play(arr, y, x);
+	play(arr, y, x, num);
 	printf("\n");
 	system("pause");
 }
 
-void play(int* arr, int y, int x) {
+void play(int* arr, int y, int x, int num) {
 	int* map = (int*)malloc(sizeof(int)*y*x);
 	int cursorX = 0, cursorY = 0;
 	for (int i = 0; i < x*y; i++) {
@@ -38,23 +35,19 @@ void play(int* arr, int y, int x) {
 		if (GetAsyncKeyState(VK_LEFT) & 0x0001){
 			if (cursorX > 0){
 				cursorX = cursorX - 1;
-				drawMap(map, y, x);
 			}
 		}
 		if (GetAsyncKeyState(VK_RIGHT) & 0x0001)
 			if (cursorX < x-1){
 				cursorX = cursorX + 1;
-				drawMap(map, y, x);
 			}
 		if (GetAsyncKeyState(VK_DOWN) & 0x0001)
 			if (cursorY < y-1){
 				cursorY = cursorY + 1;
-				drawMap(map, y, x);
 			}
 		if (GetAsyncKeyState(VK_UP) & 0x0001)
 			if (cursorY > 0){
 				cursorY = cursorY - 1;
-				drawMap(map, y, x);
 			}
 		gotoxy(cursorY, cursorX*2);
 
@@ -69,18 +62,21 @@ void play(int* arr, int y, int x) {
 		}
 
 		if (GetAsyncKeyState(VK_RETURN) & 0x0001) {
-			if (arr[cursorY*x + cursorX] == 0) {
-				getBlank(arr, map, y, x, cursorY, cursorX);
-				//getBlankRightUp(arr,map,y,x,cursorY, cursorX);
-				//getBlankRightDown(arr, map, y, x, cursorY, cursorX);
-				//getBlankLeftUp(arr, map, y, x, cursorY, cursorX);
-				//getBlankLeftDown(arr, map, y, x, cursorY, cursorX);
-			}
-			else {
-				printf("지뢰 발견");
-				break;
+			if(map[cursorY*x + cursorX] == 10){
+				if (arr[cursorY*x + cursorX] == 0) {
+					getBlank(arr, map, y, x, cursorY, cursorX);
+				}
+				else {
+					printf("지뢰 발견");
+					break;
+				}
 			}
 			drawMap(map, y, x);
+			if (checkEnd(arr, map, y, x, num)) {
+				gotoxy(y + 1, 0);
+				printf("게임을 끝내셧습니다\n");
+				break;
+			}
 		}
 		Sleep(50);
 	}
@@ -102,7 +98,7 @@ void drawMap(int* arr, int y, int x) {
 			else if (arr[i*x + j] == 10)
 				printf("■");
 			else if (arr[i*x + j] == 11)
-				printf("?");
+				printf("★");
 		}
 	}
 }
@@ -141,52 +137,23 @@ void getBlank(int* arr, int* map, int y, int x, int nowY, int nowX) {
 	}
 }
 
-//void getBlankRightUp(int* arr, int* map, int y, int x, int nowY, int nowX) {
-//	if (nowX < 0 || nowX > x || nowY < 0 || nowY > y) {
-//		return;
-//	}
-//	if (arr[nowY*x + (nowX + 1)] == 0)
-//		getBlankRightUp(arr, map, y, x, nowY, nowX + 1);
-//	if (arr[(nowY + 1)*x + nowX] == 0)
-//		getBlankRightUp(arr, map, y, x, nowY + 1, nowX);
-//	
-//	map[(nowY*x) + nowX] = 0;	
-//}
-//
-//void getBlankRightDown(int* arr, int* map, int y, int x, int nowY, int nowX) {
-//	if (nowX < 0 || nowX > x || nowY < 0 || nowY > y) {
-//		return;
-//	}
-//	if (arr[nowY*x + (nowX + 1)] == 0)
-//		getBlankRightDown(arr, map, y, x, nowY, nowX + 1);
-//	if (arr[(nowY - 1)*x + nowX] == 0)
-//		getBlankRightDown(arr, map, y, x, nowY - 1, nowX);
-//
-//	map[(nowY*x) + nowX] = 0;
-//}
-//
-//void getBlankLeftUp(int* arr, int* map, int y, int x, int nowY, int nowX) {
-//	if (nowX < 0 || nowX > x || nowY < 0 || nowY > y) {
-//		return;
-//	}
-//
-//	if (arr[(nowY + 1)*x + nowX] == 0)
-//		getBlankLeftUp(arr, map, y, x, nowY + 1, nowX);
-//	if (arr[nowY*x + (nowX - 1)] == 0)
-//		getBlankLeftUp(arr, map, y, x, nowY, nowX - 1);
-//
-//	map[(nowY*x) + nowX] = 0;
-//}
-//
-//void getBlankLeftDown(int* arr, int* map, int y, int x, int nowY, int nowX) {
-//	if (nowX < 0 || nowX > x || nowY < 0 || nowY > y) {
-//		return;
-//	}
-//
-//	if (arr[(nowY - 1)*x + nowX] == 0)
-//		getBlankLeftDown(arr, map, y, x, nowY - 1, nowX);
-//	if (arr[nowY*x + (nowX - 1)] == 0)
-//		getBlankLeftDown(arr, map, y, x, nowY, nowX - 1);
-//
-//	map[(nowY*x) + nowX] = 0;
-//}
+int checkEnd(int* arr, int* map, int y, int x, int num) {
+	int count = 0;
+	int right = 0;
+	for (int i = 0; i < x*y; i++) {
+		if (map[i] == 10) {
+			count++;
+		}
+	}
+	if (count == 0) {
+		for (int i = 0; i < x*y; i++) {
+			if (arr[i] == 1 && map[i] == 11) {
+				right++;
+			}
+		}
+	}
+	if (num == right) {
+		return 1;
+	}
+	return 0;
+}
